@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTTP Server in C</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background-color: #ffffff;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+      color: #333;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      color: #2c3e50;
+    }
+    ul {
+      margin-left: 1rem;
+    }
+    code {
+      background-color: #f2f2f2;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+    }
+    .box {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧵 C HTTP Server</h1>
+
+  <p>Welcome! This is a custom-built HTTP server written in C using low-level sockets and POSIX threads. It was built for learning and performance testing purposes.</p>
+
+  <div class="box">
+    <h2>✨ Features</h2>
+    <ul>
+      <li>Multithreaded request handling via a thread pool</li>
+      <li>Manual HTTP request parsing (GET & POST)</li>
+      <li>Queue-based connection dispatching</li>
+      <li>Synchronization using <code>pthread_mutex</code> and <code>pthread_cond</code></li>
+      <li>Supports simple HTML response and file serving</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>📌 Available Routes</h2>
+    <ul>
+      <li><code>/</code> – Home page (you’re here)</li>
+      <li><code>/hello</code> – Accepts POST with plain text, replies with a greeting</li>
+    </ul>
+  </div>
+
+  <div class="box">
+    <h2>📨 Try It</h2>
+    <p>Enter your name below to send a <code>POST</code> request to <code>/hello</code>.</p>
+    <textarea id="nameInput" rows="1" placeholder="Your name here..."></textarea><br/>
+    <button onclick="sendPost()">Send POST</button>
+  </div>
+
+  <script>
+    function sendPost() {
+      const name = document.getElementById('nameInput').value;
+      fetch('/hello', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: name
+      })
+      .then(res => res.text())
+      .then(text => alert("Server responded:\n" + text))
+      .catch(err => alert("Failed to send POST:\n" + err));
+    }
+  </script>
+</body>
+</html>
